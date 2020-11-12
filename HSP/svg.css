@@ -1,6 +1,10 @@
+body {
+	background-color: transparent;
+}
+
 .fullscreen-map {
     position: absolute;
-    background: transparent;
+    background-color: transparent;
     top: 0;
     left: 0;
     width: 100vw;
