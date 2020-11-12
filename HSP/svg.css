@@ -1,9 +1,10 @@
 .fullscreen-map {
     position: absolute;
+    background: transparent;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    min-width: 1020px;
+    /*min-width: 1020px;*/
     z-index: -1;
 }
