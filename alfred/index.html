@@ -17,6 +17,13 @@
       <v-main>
         <v-container>Hello world</v-container>
         {{ message }}
+          <ol>
+            <todo-item
+              v-for="item in groceryList"
+              v-bind:todo="item"
+              v-bind:key="item.id"
+            ></todo-item>
+          </ol>
       </v-main>
     </v-app>
   </div>
@@ -24,11 +31,21 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script>
+    Vue.component('todo-item', {
+      props: ['todo'],
+      template: '<li>{{ todo.text }}</li>'
+    })
+
     new Vue({
       el: '#app',
       vuetify: new Vuetify(),
       data: {
         message: 'Bonjour ici !'
+        groceryList: [
+          { id: 0, text: 'Légumes' },
+          { id: 1, text: 'Fromage' },
+          { id: 2, text: 'Tout ce que les humains sont supposés manger' }
+        ]
       }
     })
   </script>
