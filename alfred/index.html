@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+    <link rel = "stylesheet" type = "text/css" href = "notion-dark.css">
 </head>
-
-<body>
-    <div id="app" class="container">
+<body class="notion-body-dark">
+    <div id="app" class="container notion-dark-theme">
         
         <section>
             <b-table
                 :data="data"
                 :loading="loading"
                 :sticky-header="stickyHeaders"
-                
+
                 paginated
                 backend-pagination
                 :total="total"

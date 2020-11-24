@@ -1,0 +1,11 @@
+.notion-body-dark {
+	background-color: #2f3437;
+}
+
+.notion-dark-theme {
+	color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: auto;
+}
+}
