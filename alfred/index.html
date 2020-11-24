@@ -1,55 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 </head>
+
 <body>
-  <template>
-  <v-btn block>
-    Block Button
-    </v-btn>
-  </template>
-  <div id="app">
-    <v-app>
-      <v-main>
-        <v-container>Hello world</v-container>
-        {{ message }}
-          <ol>
-            <todo-item
-              v-for="item in groceryList"
-              v-bind:todo="item"
-              v-bind:key="item.id"
-            ></todo-item>
-          </ol>
-      </v-main>
-    </v-app>
-  </div>
+    <div id="app">
+        <!-- Buefy components goes here -->
+        <b-table :data="data" :columns="columns"></b-table>
+    </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-  <script>
-    Vue.component('todo-item', {
-      props: ['todo'],
-      template: '<li>{{ todo.text }}</li>'
-    })
+    <script src="https://unpkg.com/vue"></script>
+    <!-- Full bundle -->
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-    var data = {
-      message: 'Bonjour ici !',
-      groceryList: [
-        { id: 0, text: 'Légumes' },
-        { id: 1, text: 'Fromage' },
-        { id: 2, text: 'Tout ce que les humains sont supposés manger' }
-      ]
-    }
+    <!-- Individual components -->
+    <script src="https://unpkg.com/buefy/dist/components/table"></script>
+    <script src="https://unpkg.com/buefy/dist/components/input"></script>
 
-    var vm = new Vue({
-      el: '#app',
-      vuetify: new Vuetify(),
-      data: data
-    })
-  </script>
+    <script>
+
+        const example = {
+            data() {
+                return {
+                    data: [
+                        { 'id': 1, 'first_name': 'Jesse', 'last_name': 'Simmons', 'date': '2016-10-15 13:43:27', 'gender': 'Male' },
+                        { 'id': 2, 'first_name': 'John', 'last_name': 'Jacobs', 'date': '2016-12-15 06:00:53', 'gender': 'Male' },
+                        { 'id': 3, 'first_name': 'Tina', 'last_name': 'Gilbert', 'date': '2016-04-26 06:26:28', 'gender': 'Female' },
+                        { 'id': 4, 'first_name': 'Clarence', 'last_name': 'Flores', 'date': '2016-04-10 10:28:46', 'gender': 'Male' },
+                        { 'id': 5, 'first_name': 'Anne', 'last_name': 'Lee', 'date': '2016-12-06 14:38:38', 'gender': 'Female' }
+                    ],
+                    columns: [
+                        {
+                            field: 'id',
+                            label: 'ID',
+                            width: '40',
+                            numeric: true
+                        },
+                        {
+                            field: 'first_name',
+                            label: 'First Name',
+                        },
+                        {
+                            field: 'last_name',
+                            label: 'Last Name',
+                        },
+                        {
+                            field: 'date',
+                            label: 'Date',
+                            centered: true
+                        },
+                        {
+                            field: 'gender',
+                            label: 'Gender',
+                        }
+                    ]
+                }
+            }
+        }
+
+        const app = new Vue(example)
+        app.$mount('#app')
+
+    </script>
 </body>
 </html>
