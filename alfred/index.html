@@ -36,17 +36,19 @@
       template: '<li>{{ todo.text }}</li>'
     })
 
-    new Vue({
+    var data = {
+      message: 'Bonjour ici !',
+      groceryList: [
+        { id: 0, text: 'Légumes' },
+        { id: 1, text: 'Fromage' },
+        { id: 2, text: 'Tout ce que les humains sont supposés manger' }
+      ]
+    }
+
+    var vm = new Vue({
       el: '#app',
       vuetify: new Vuetify(),
-      data: {
-        message: 'Bonjour ici !',
-        groceryList: [
-          { id: 0, text: 'Légumes' },
-          { id: 1, text: 'Fromage' },
-          { id: 2, text: 'Tout ce que les humains sont supposés manger' }
-        ]
-      }
+      data: data
     })
   </script>
 </body>
