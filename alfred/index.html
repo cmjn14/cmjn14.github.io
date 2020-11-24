@@ -7,10 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 <body>
+  <template>
+  <v-btn block>
+    Block Button
+    </v-btn>
+  </template>
   <div id="app">
     <v-app>
       <v-main>
         <v-container>Hello world</v-container>
+        {{ message }}
       </v-main>
     </v-app>
   </div>
@@ -21,6 +27,9 @@
     new Vue({
       el: '#app',
       vuetify: new Vuetify(),
+      data: {
+        message: 'Bonjour ici !'
+      }
     })
   </script>
 </body>
