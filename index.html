@@ -8,25 +8,21 @@
     <div id="MsAcTable"></div>
 </body>
 <script type="text/javascript">
-    var tabledata = [
-    {id:1, Ti:"Oli Bob", Y:"12"},
-    {id:2, Ti:"Mary May", Y:"1"},
-    {id:3, Ti:"Christine Lobowski", Y:"42"},
-    {id:4, Ti:"Brendon Philips", Y:"125"},
-    {id:5, Ti:"Margret Marmajuke", Y:"16"},
-    ];
-    //create Tabulator on DOM element with id "example-table"
+    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=Composite(AA.AuN=='jaime%20teevan')&count=2&attributes=Ti,Y,CC,AA.AuN,AA.AuId&subscription-key=" + apikey
+    //create Tabulator on DOM element with id "MsAcTable"
+console.log(msurl);
     var table = new Tabulator("#MsAcTable", {
         height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
-        data:tabledata, //assign data to table
-        layout:"fitDataTable", //fit columns to width of table (optional)
+        //data:tabledata, //assign data to table
+        ajaxURL: msurl,
+        ajaxProgressiveLoad:"scroll",
+        paginationSize:20,
+        placeholder:"No Data Set",
+        layout:"fitColumns", //fit columns to width of table (optional)
         columns:[ //Define Table Columns
-            {title:"Title", field:"Ti", width:150},
-            {title:"Year", field:"Y", sorted:"date", hozAlign:"center"}
-        ],
-        rowClick:function(e, row){ //trigger an alert message when the row is clicked
-            alert("Row " + row.getData().id + " Clicked!!!!");
-        },
+            {title:"Title", field:"entities.Ti", width:150},
+            {title:"Year", field:"entities.Y", hozAlign:"center"}
+        ]
     });
 </script>
 </html>
