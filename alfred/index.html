@@ -66,7 +66,7 @@
             {title:"Year", field:"Y", sorter:"number", hozAlign:"center", width:75},
             {title:"Sources", field:"S", sorter:"string", formatter:function(cell, formatterParams, onRendered) {
                 var mainURL = cell.getValue()[0].U;
-                return "<a href='" + mainURL + "'>" + mainURL + "</a>";
+                return "<a href='" + mainURL + "' target='_blank'>" + mainURL + "</a>";
             }}
         ]
     }
