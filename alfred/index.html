@@ -2,11 +2,12 @@
 <head>
     <link href="https://unpkg.com/tabulator-tables@4.9.1/dist/css/tabulator.min.css" rel="stylesheet">
 <!--    <link href="https://unpkg.com/tabulator-tables@4.9.1/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet"> -->
+    <link href="https://unpkg.com/tabulator-tables@4.9.1/dist/css/bulma/tabulator_bulma.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.1/dist/js/tabulator.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/axios@0.21.0/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
     <style>
-        * {
+    /*    * {
             color: rgba(255, 255, 255, 0.9);
             line-height: 1.5;
             font-size: 12px;
@@ -15,15 +16,16 @@
             background-color: #2f3437;
             color:#fff;
         }
+    */
     </style>
 </head>
 <body>
-    <div id="MsAcTable"></div>
+    <div id="MsAcTable" class="table is-narrow is-hoverable"></div>
 </body>
 <script type="text/javascript">
     //create Tabulator on DOM element with id "example-table"
     //Build Tabulator
-    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=And(W='planetary',W='boundaries')&model=latest&count=20&attributes=Id,DN,DOI,S,AW,Y,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
+    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=And(W='planetary',W='boundaries')&model=latest&count=100&attributes=Id,DN,DOI,S,AW,Y,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
 
     // Call API with axios instead of built-in fetch() (works better)
 
@@ -56,22 +58,28 @@
     }
 
     var table = new Tabulator("#MsAcTable", {
-        height:"311px",
+        height:"930px",
+        minHeight:"300px",
         layout:"fitColumns",
         responsiveLayout:"collapse",
+        responsiveLayoutCollapseStartOpen:false,
         ajaxRequestFunc:axiosQuery,
         ajaxURL:msurl,
+        pagination:"local",
         paginationSize:20,
-        placeholder:"No Data Set",
+        placeholder:"No Data Available",
         columns:[
-            {title:"DOI", field:"DOI", sorter:"string", width:200},
-            {title:"Title", field:"DN", sorter:"string", formatter:"textarea"},
-            {title:"Authors", field:"Authors", sorter:"string", formatter:"textarea"},
-            {title:"Year", field:"Y", sorter:"number", hozAlign:"center", width:75},
-            {title:"Sources", field:"S", sorter:"string", formatter:function(cell, formatterParams, onRendered) {
+            {formatter:"responsiveCollapse", headerSort:false},
+            {title:"Title", field:"DN", sorter:"string", minWidth: 300, formatter:"textarea"},
+            {title:"Authors", field:"Authors", sorter:"string", minWidth: 200, tooltip:function(cell){
+                return cell.getValue();
+            }},
+            {title:"Year", field:"Y", sorter:"number", hozAlign:"center", minWidth:75},
+            {title:"Sources", field:"S", sorter:"string", minWidth: 300, formatter:function(cell, formatterParams, onRendered) {        // SEE http://tabulator.info/docs/4.9/format -> "Link" for correct formatting
                 var mainURL = cell.getValue()[0].U;
                 return "<a href='" + mainURL + "' target='_blank'>" + mainURL + "</a>";
-            }}
+            }},
+            {title:"DOI", field:"DOI", sorter:"string", minWidth:200},
         ]
     }
     );
