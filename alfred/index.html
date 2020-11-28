@@ -19,7 +19,7 @@
 <script type="text/javascript">
     //create Tabulator on DOM element with id "example-table"
     //Build Tabulator
-    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=And(W='planetary',W='boundaries')&model=latest&count=20&attributes=Id,Ti,Y,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
+    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=And(W='planetary',W='boundaries')&model=latest&count=20&attributes=Id,DN,DOI,S,AW,Y,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
 
     // Call API with axios instead of built-in fetch() (works better)
 
@@ -37,7 +37,7 @@
                 var tempArray = [];
                 _.forEach(results, function(el,i) {
                     tempArray = [];
-                    _.forEach(el.AA, function(el2,j) {
+                    _.forEach(_.uniqBy(el.AA,'AuN'), function(el2,j) {
                         tempArray.push(_.startCase(el2.AuN));
                     })
                     el.Authors = tempArray.join(", ");
@@ -54,14 +54,20 @@
     var table = new Tabulator("#MsAcTable", {
         height:"311px",
         layout:"fitColumns",
+        responsiveLayout:"collapse",
         ajaxRequestFunc:axiosQuery,
         ajaxURL:msurl,
         paginationSize:20,
         placeholder:"No Data Set",
         columns:[
-            {title:"Title", field:"Ti", sorter:"string"},
-            {title:"Authors", field:"Authors", sorter:"string"},
-            {title:"Year", field:"Y", sorter:"number", hozAlign:"center", width:100}
+            {title:"DOI", field:"DOI", sorter:"string", width:200},
+            {title:"Title", field:"DN", sorter:"string", formatter:"textarea"},
+            {title:"Authors", field:"Authors", sorter:"string", formatter:"textarea"},
+            {title:"Year", field:"Y", sorter:"number", hozAlign:"center", width:75},
+            {title:"Sources", field:"S", sorter:"string", formatter:function(cell, formatterParams, onRendered) {
+                var mainURL = cell.getValue()[0].U;
+                return "<a href='" + mainURL + "'>" + mainURL + "</a>";
+            }}
         ]
     }
     );
