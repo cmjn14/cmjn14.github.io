@@ -1,33 +1,48 @@
 </html>
 <head>
-    <link href="https://unpkg.com/tabulator-tables@4.9.1/dist/css/tabulator.min.css" rel="stylesheet">
+<!--    <link href="https://unpkg.com/tabulator-tables@4.9.1/dist/css/tabulator.min.css" rel="stylesheet"> -->
+    <link href="https://unpkg.com/tabulator-tables@4.9.1/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.1/dist/js/tabulator.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/axios@0.21.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
 </head>
 <body>
-    <div id="MsAcTable"></div>
+    <div id="MsAcTable" class="table-dark"></div>
 </body>
 <script type="text/javascript">
     //create Tabulator on DOM element with id "example-table"
     //Build Tabulator
-    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=And(W='photovoltaic')&model=latest&count=120&attributes=Id,Ti,Y,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
+    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=And(W='photovoltaic')&model=latest&count=5&attributes=Id,Ti,Y,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
 
     // Call API with axios instead of built-in fetch() (works better)
+
     function axiosQuery(url, config, params){
-            //url - the url of the request
-            //config - the ajaxConfig object
-            //params - the ajaxParams object
-            //return promise
-            return new Promise(function(resolve, reject){
-                axios.get(msurl)
-                .then(function (response) {
-                    resolve(response.data.entities);
+        //url - the url of the request
+        //config - the ajaxConfig object
+        //params - the ajaxParams object
+        //return promise
+        return new Promise(function(resolve, reject){
+            axios.get(msurl)
+            .then(function (response) {
+                console.log(response.data.entities);
+                // Need to flatten to get author names --> A GENERALISER ET SORTIR D'ICI
+                var results = response.data.entities;
+                var tempArray = [];
+                _.forEach(results, function(el,i) {
+                    tempArray = [];
+                    _.forEach(el.AA, function(el2,j) {
+                        tempArray.push(_.startCase(el2.AuN));
+                    })
+                    el.Authors = tempArray.join(", ");
                 })
-                .catch(function (error) {
-                    reject(error.toString());
-                });
+                console.log(results);
+                resolve(results);
+            })
+            .catch(function (error) {
+                reject(error.toString());
             });
-        }
+        });
+    }
 
     var table = new Tabulator("#MsAcTable", {
         height:"311px",
@@ -37,8 +52,9 @@
         paginationSize:20,
         placeholder:"No Data Set",
         columns:[
-            {title:"Title", field:"Ti", sorter:"string", width:200},
-            {title:"Year", field:"Y", sorter:"number", hozAlign:"center"}
+            {title:"Title", field:"Ti", sorter:"string"},
+            {title:"Authors", field:"Authors", sorter:"string"},
+            {title:"Year", field:"Y", sorter:"number", hozAlign:"center", width:100}
         ]
     }
     );
