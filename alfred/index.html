@@ -28,7 +28,7 @@
 <script type="text/javascript">
     //create Tabulator on DOM element with id "example-table"
     //Build Tabulator
-    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=And(W='photovoltaic')&model=latest&count=100&attributes=Id,DN,DOI,S,AW,Y,BV,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
+    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=Or(And(W='planetary',W='boundaries'),And(AW='planetary',AW='boundaries'))&model=latest&count=100&attributes=Id,DN,DOI,S,AW,Y,BV,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
 
     // Call API with axios instead of built-in fetch() (works better)
 
@@ -81,8 +81,7 @@
                 return "<a href='" + mainURL + "' target='_blank'>" + mainURL + "</a>";
             }},
             {title:"DOI", field:"DOI", sorter:"string", minWidth:200},
-            {title:"logprob", field:"logprob", sorter:"number", minWidth:75},
-            {title:"Abstract Words", field:"AW", sorter:"string", width:300, formatter:"textarea"},
+            {title:"logprob", field:"logprob", sorter:"number", minWidth:75}
         ]
     }
     );
