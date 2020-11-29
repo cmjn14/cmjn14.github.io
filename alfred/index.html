@@ -24,7 +24,7 @@
 <script type="text/javascript">
     //create Tabulator on DOM element with id "example-table"
     //Build Tabulator
-    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=And(W='planetary',W='boundaries')&model=latest&count=100&attributes=Id,DN,DOI,S,AW,Y,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
+    var msurl = "https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate?expr=And(W='planetary',W='boundaries')&model=latest&count=100&attributes=Id,DN,DOI,S,AW,Y,BV,CC,AA.AuN,AA.AuId&subscription-key=65e7d447534144dba1470339b8f29a88";
 
     // Call API with axios instead of built-in fetch() (works better)
 
@@ -69,7 +69,7 @@
         placeholder:"No Data Available",
         columns:[
             {formatter:"responsiveCollapse", headerSort:false},
-            {title:"Title", field:"DN", sorter:"string", minWidth: 300, formatter:"textarea"},
+            {title:"Title", field:"BV", sorter:"string", minWidth: 300, formatter:"textarea"},
             {title:"Authors", field:"Authors", sorter:"string", minWidth: 200, tooltip:function(cell){
                 return cell.getValue();
             }},
